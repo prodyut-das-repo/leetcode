@@ -1,28 +1,23 @@
 /**
- * @param {string} key
- * @param {string} message
- * @return {string}
+ * @param {string} s
+ * @return {number}
  */
-var decodeMessage = function (key, message) {
-  key = key.split(" ").join("").split("");
-  key = key.filter((item, pos) => key.indexOf(item) === pos).join("");
-  let occ = {};
-  let code = 97;
-  let res = "";
-  for (i of key) {
-    occ[i] = String.fromCharCode(code);
-    code++;
+var lengthOfLongestSubstring = function (s) {
+  let array = [];
+  for (let i = 0; i < s.length; i++) {
+    for (let j = 0; j < s.length; j++) {
+      for (let k = 0; k < s.length; k++) {
+        if (i !== j && j !== k && i !== k) {
+          if (s[i] + s[j] + s[k] === 0) {
+            array.push([s[i], s[j], s[k]].sort((a, b) => a - b));
+          }
+        }
+      }
+    }
   }
-  for (i of message) {
-    res += occ[i] || " ";
-  }
-  return res;
+  return Array.from(new Set(array.map(JSON.stringify)), JSON.parse);
 };
-
-decodeMessage(
-  "the quick brown fox jumps over the lazy dog",
-  "vkbs bs t suepuv"
-);
+lengthOfLongestSubstring([-1, 0, 1, 2, -1, -4]);
 
 // Example 1:
 
