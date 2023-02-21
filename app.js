@@ -1,36 +1,75 @@
-/**
- * @param {string} s
- * @return {number}
- */
-var lengthOfLongestSubstring = function (s) {
-  let array = [];
-  for (let i = 0; i < s.length; i++) {
-    for (let j = 0; j < s.length; j++) {
-      for (let k = 0; k < s.length; k++) {
-        if (i !== j && j !== k && i !== k) {
-          if (s[i] + s[j] + s[k] === 0) {
-            array.push([s[i], s[j], s[k]].sort((a, b) => a - b));
-          }
+class BinarySearchTree {
+  constructor() {
+    this.root = null;
+  }
+
+  insert(val) {
+    let newNode = new Node(val);
+    if (!this.root) {
+      this.root = newNode;
+      return this;
+    }
+    let current = this.root;
+    while (true) {
+      if (val < current.value) {
+        if (current.left === null) {
+          current.left = newNode;
+          return this;
+        } else current = current.left;
+      } else if (val > current.value) {
+        if (current.right === null) {
+          current.right = newNode;
+          return this;
+        } else {
+          current = current.right;
         }
       }
     }
   }
-  return Array.from(new Set(array.map(JSON.stringify)), JSON.parse);
-};
-lengthOfLongestSubstring([-1, 0, 1, 2, -1, -4]);
 
-// Example 1:
+  find(val) {
+    if (!this.root) return false;
+    if (val === this.root.value) {
+      return this;
+    }
+    let current = this.root;
+    while (true) {
+      if (val < current.value) {
+        if(!current.left) return 'Not found';
+        if (val === current.left.value) {
+          return current.left;
+        } else {
+          current = current.left;
+        }
+      } else if (val > current.value) {
+        if(!current.right) return 'Not found';
+        if (val === current.right.value) {
+          return current.right;
+        } else {
+          current = current.right;
+        }
+      }
+    }
+  }
+}
 
-// Input: s = "leetcode", wordDict = ["leet","code"]
-// Output: true
-// Explanation: Return true because "leetcode" can be segmented as "leet code".
-// Example 2:
+class Node {
+  constructor(value) {
+    this.value = value;
+    this.left = null;
+    this.right = null;
+  }
+}
 
-// Input: s = "applepenapple", wordDict = ["apple","pen"]
-// Output: true
-// Explanation: Return true because "applepenapple" can be segmented as "apple pen apple".
-// Note that you are allowed to reuse a dictionary word.
-// Example 3:
-
-// Input: s = "catsandog", wordDict = ["cats","dog","sand","and","cat"]
-// Output: false
+let tree = new BinarySearchTree();
+tree.insert(10);
+tree.insert(12);
+tree.insert(2);
+tree.insert(14);
+tree.insert(19);
+tree.insert(7);
+tree.insert(9);
+console.log(tree.root.right.right.right);
+let a = tree.find(19);
+console.log('aaaaa',a);
+//console.log(tree);
