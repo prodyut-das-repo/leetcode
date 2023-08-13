@@ -1,7 +1,4 @@
-/**
- * @param {number} n
- * @return {boolean}
- */
+
 var isHappy = function (n) {
   let sum = func(n);
   return sum == 1;
